@@ -22,6 +22,9 @@ jobs:
       fail-fast: false
       matrix:
         language: [ 'java-kotlin' ]
+        include:
+          - language: java-kotlin
+            build-mode: manual
 
     steps:
     - name: Checkout repository
@@ -40,9 +43,16 @@ jobs:
       uses: github/codeql-action/init@v3
       with:
         languages: ${{ matrix.language }}
-        build-mode: autobuild
+        build-mode: ${{ matrix.build-mode }}
+        queries: security-extended,security-and-quality
+
+    - name: Build with Gradle
+      run: |
+        chmod +x gradlew
+        ./gradlew assembleDebug --no-daemon --info 2>&1 | tail -50
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
       with:
         category: "/language:${{matrix.language}}"
+        upload: true
