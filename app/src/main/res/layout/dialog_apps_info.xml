@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:orientation="vertical" >
+
+   <View
+       android:layout_width="20dip"
+       android:layout_height="4dip"/>
+
+   <TextView
+       android:id="@+id/app_info_package"
+       android:textSize="16dp"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text=""/>
+
+   <View
+       android:layout_width="20dip"
+       android:layout_height="8dip"/>
+
+   <CheckBox android:id="@+id/app_info_enabled"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Enabled" />
+
+   <CheckBox android:id="@+id/app_info_admin"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Admin" />
+
+   <TextView
+       android:textSize="14dp"
+       android:paddingTop="10dp"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Do NOT enable ADMIN unless you trust the App"/>
+
+</LinearLayout>
