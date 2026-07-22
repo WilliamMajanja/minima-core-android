@@ -10,21 +10,13 @@ on:
 
 jobs:
   analyze:
-    name: Analyze
+    name: Analyze Java
     runs-on: ubuntu-latest
     timeout-minutes: 45
     permissions:
       actions: read
       contents: read
       security-events: write
-
-    strategy:
-      fail-fast: false
-      matrix:
-        language: [ 'java-kotlin' ]
-        include:
-          - language: java-kotlin
-            build-mode: manual
 
     steps:
     - name: Checkout repository
@@ -36,23 +28,25 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
 
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
-        languages: ${{ matrix.language }}
-        build-mode: ${{ matrix.build-mode }}
-        queries: security-extended,security-and-quality
+        languages: java-kotlin
+        build-mode: manual
+        config-file: .github/codeql/codeql-config.yml
 
     - name: Build with Gradle
       run: |
         chmod +x gradlew
-        ./gradlew assembleDebug --no-daemon --info 2>&1 | tail -50
+        ./gradlew :app:assembleDebug :minimaapi:assembleDebug --no-daemon --stacktrace
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
       with:
-        category: "/language:${{matrix.language}}"
-        upload: true
+        category: "/language:java-kotlin"
