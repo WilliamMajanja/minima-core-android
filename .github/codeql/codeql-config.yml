@@ -1,9 +1,11 @@
 name: CodeQL Configuration
-query-filters:
-  - uses: security-extended
+
+queries:
   - uses: security-and-quality
 
 paths-ignore:
   - '**/test/**'
   - '**/tests/**'
   - '**/androidTest/**'
+  - '**/ExampleInstrumentedTest.java'
+  - '**/ExampleUnitTest.java'
